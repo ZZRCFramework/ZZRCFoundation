@@ -113,10 +113,10 @@
 		7EB1541724495B31007D4A53 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				7EB15470244989A7007D4A53 /* Main */,
 				7EB1544724496E0B007D4A53 /* Tool */,
 				7EB1542824496B8C007D4A53 /* Extension */,
 				7EB1541924495FA8007D4A53 /* Net */,
-				7EB1542624496337007D4A53 /* Foundation.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -154,6 +154,14 @@
 				7EB1544824496E21007D4A53 /* SystemBridge.swift */,
 			);
 			path = Tool;
+			sourceTree = "<group>";
+		};
+		7EB15470244989A7007D4A53 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7EB1542624496337007D4A53 /* Foundation.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		9A289BE62B245383C7FE2E44 /* Pods */ = {

@@ -65,10 +65,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "10.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
-  # s.tvos.deployment_target = "9.0"
+  # s.tvos.deployment_target = "10.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -88,7 +88,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "ZZRCFoundation", "ZZRCFoundation/**/*.swift"
+  s.source_files  = "ZZRCFoundation", "ZZRCFoundation/Foundation/**/*.swift"
   # s.resource     = 'ZZRCFoundation/Source/image/.bundle'
 
   # s.public_header_files = "Classes/**/*.h"
