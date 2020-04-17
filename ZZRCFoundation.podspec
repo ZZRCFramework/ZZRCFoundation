@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = "APP框架基础"
 
-  s.homepage     = "http://EXAMPLE/ZZRCFoundation"
+  s.homepage     = "https://github.com/ZZRCFramework/Foundation"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "git@git.zz.com:client/ZZRCFoundation.git"}
+  s.source       = { :git => "https://github.com/ZZRCFramework/Foundation.git"}
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
