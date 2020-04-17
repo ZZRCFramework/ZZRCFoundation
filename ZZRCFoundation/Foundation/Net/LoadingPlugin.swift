@@ -15,9 +15,9 @@ class LoadingPlugin: PluginType {
     func willSend(_ request: RequestType, target: TargetType) {
         if let target = target as? NetTargetType, target.isLoading {
             Print("isloading")
-//            safeAsync {
-//                HUDHelper.showLoadingHud(inView: SystemBridge.topViewController()?.view)
-//            }
+            safeAsync {
+                HUDHelper.showLoadingHud(inView: SystemBridge.topViewController()?.view)
+            }
         }
     }
     
@@ -25,9 +25,9 @@ class LoadingPlugin: PluginType {
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         if let target = target as? NetTargetType, target.isLoading {
             Print("isloading")
-//            safeAsync {
-//                HUDHelper.hideLoadingHud(inView: SystemBridge.topViewController()?.view)
-//            }
+            safeAsync {
+                HUDHelper.hideLoadingHud(inView: SystemBridge.topViewController()?.view)
+            }
         }
     }
 }

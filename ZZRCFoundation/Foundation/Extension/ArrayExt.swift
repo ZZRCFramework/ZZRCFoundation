@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
     ///JsonStr
-    public func jsonString() -> String {
+    func jsonString() -> String {
         var result:String = ""
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.init(rawValue: 0))
@@ -25,7 +25,7 @@ extension Array {
         return result
     }
     
-    public static func arrayWithJson(_ jsonString: String) -> [[String:Any]]? {
+    static func arrayWithJson(_ jsonString: String) -> [[String:Any]]? {
         if let data = jsonString.data(using: String.Encoding.utf8) {
             let dic = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.init(rawValue: 0))
             return dic as? [[String:Any]]
@@ -37,7 +37,7 @@ extension Array {
     ///
     /// - Parameter index: 索引
     /// - Returns: 对象
-    public func safeObjectAtIndex(index: Int) -> Element? {
+    func safeObjectAtIndex(index: Int) -> Element? {
         if index < self.count && index >= 0 {
             return self[index]
         }

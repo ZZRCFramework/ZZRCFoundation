@@ -11,7 +11,7 @@ import Foundation
 import CommonCrypto
 
 
-extension String {
+public extension String {
     
     /// 字符长度
     var length: Int {

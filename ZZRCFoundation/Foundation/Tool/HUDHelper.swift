@@ -8,14 +8,14 @@
 
 import UIKit
 
-class HUDHelper {
+public class HUDHelper {
 
     private static let viewTag = 10000000
     private static let hudViewTag = 10000001
     private static let hudWidth = 60
     private static var loadingView: UIView?
     
-    public class func showLoadingHud(text: String? = nil , inView: UIView?) {
+    class func showLoadingHud(text: String? = nil , inView: UIView?) {
         hideLoadingHud(inView: inView)
         guard let inView = inView else {
             return
@@ -28,7 +28,7 @@ class HUDHelper {
         HUDHelper.loadingView = inView
     }
 
-    public class func hideLoadingHud(inView: UIView?) {
+    class func hideLoadingHud(inView: UIView?) {
         guard let inView = inView else {
             return
         }
@@ -40,14 +40,14 @@ class HUDHelper {
         inView.clearAllNotice()
     }
     
-    public class func showHUD(text: String ,inView: UIView?) {
+    class func showHUD(text: String ,inView: UIView?) {
         guard inView != nil else {
             return
         }
         inView?.noticeOnlyText(text)
     }
     
-    public class func showTopHUD(text: String,inView: UIView?) {
+    class func showTopHUD(text: String,inView: UIView?) {
         inView?.noticeTop(text)
     }
 }

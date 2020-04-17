@@ -7,8 +7,8 @@
 //
 
 import Foundation
-extension Dictionary {
-    public func jsonString() -> String {
+public extension Dictionary {
+    func jsonString() -> String {
         do {
             let stringData = try JSONSerialization.data(withJSONObject: self as NSDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
             if let string = String(data: stringData, encoding: String.Encoding.utf8){
@@ -20,7 +20,7 @@ extension Dictionary {
         return ""
     }
     
-    public static func dicWithJson(_ jsonString: String) -> [String:Any]? {
+    static func dicWithJson(_ jsonString: String) -> [String:Any]? {
         if let data = jsonString.data(using: String.Encoding.utf8) {
             let dic = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.init(rawValue: 0))
             return dic as? [String:Any]

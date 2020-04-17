@@ -7,7 +7,7 @@
 //
 
 import Foundation
-extension Date {
+public extension Date {
     
     /// 根据时间戳转换时间
     ///
