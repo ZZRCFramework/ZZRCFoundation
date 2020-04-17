@@ -9,10 +9,10 @@
 import UIKit
 import HandyJSON
 
-public class DynamicModel: NSObject,HandyJSON {
-    var isSelect = false
+open class DynamicModel: NSObject,HandyJSON {
+    open var isSelect = false
 
-    var cellType: AnyClass {
+    open var cellType: AnyClass {
         return UITableViewCell.classForCoder()
     }
     

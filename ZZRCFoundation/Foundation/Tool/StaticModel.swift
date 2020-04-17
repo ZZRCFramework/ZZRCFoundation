@@ -9,11 +9,11 @@
 import Foundation
 import HandyJSON
 
-struct StaticModel: HandyJSON {
+struct StructModel: HandyJSON {
     public func mapping(mapper: HelpingMapper) {}
     public func didFinishMapping() {}
 }
 
-public protocol BaseEnum: HandyJSONEnum {
+protocol BaseEnum: HandyJSONEnum {
    
 }

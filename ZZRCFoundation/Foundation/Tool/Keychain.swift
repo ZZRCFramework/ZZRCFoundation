@@ -14,7 +14,7 @@ private let kAccount = "com.microFinance.deviceid"
 public struct KeychainTool {
 
     //MARK: public func
-    static func getDeviveID() -> String {
+    public static func getDeviveID() -> String {
         if let deviceId = getDeviceIdFromSandBox() {
             return deviceId
         }

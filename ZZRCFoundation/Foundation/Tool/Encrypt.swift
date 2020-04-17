@@ -10,5 +10,5 @@ import Foundation
 import CryptoSwift
 
 public struct Encrypt {
-    
+    static func test(){}
 }

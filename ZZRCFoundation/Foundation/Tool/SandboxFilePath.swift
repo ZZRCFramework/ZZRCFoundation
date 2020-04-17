@@ -110,7 +110,7 @@ public struct SandboxFilePath {
     }
 }
 
-extension String {
+public extension String {
     
     func documentPath() -> String {
         return SandboxFilePath.directoryPath(type: .Documents) + "/\(self)"
