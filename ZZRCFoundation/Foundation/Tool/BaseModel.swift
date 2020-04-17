@@ -8,8 +8,8 @@
 
 import UIKit
 import HandyJSON
-
-open class DynamicModel: NSObject,HandyJSON {
+import WCDBSwift
+open class BaseModel: NSObject,HandyJSON {
     open var isSelect = false
 
     open var cellType: AnyClass {
@@ -32,4 +32,15 @@ open class DynamicModel: NSObject,HandyJSON {
     required override public init() {}
     public func mapping(mapper: HelpingMapper) {}
     public func didFinishMapping() {}
+}
+
+public extension TableDecodable where Self: BaseModel {
+    static func createTable(isCommon: Bool = false){
+        guard let dataBase = isCommon ? DataBaseManager.shared.commonDataBase : DataBaseManager.shared.userDataBase else { return }
+        do {
+            try dataBase.create(table: tableName(), of: Self.self)
+        } catch {
+            Print(error.localizedDescription)
+        }
+    }
 }
