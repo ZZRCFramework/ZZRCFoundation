@@ -13,34 +13,34 @@ private let kAPPId = ""
 public struct SystemBridge {
     
     // 根据某个URL跳转 (适配到iOS10)
-    public static func jumpToSystemSetting(url: String) {
+    static func jumpToSystemSetting(url: String) {
         let sysUrl: URL = URL(string: url)!
         if UIApplication.shared.canOpenURL(sysUrl) {
             UIApplication.shared.open(sysUrl, options: [:], completionHandler: nil)
         }
     }
     
-    public static func callPhone(at: String) {
+    static func callPhone(at: String) {
         jumpToSystemSetting(url: "tel://\(at)")
     }
     
-    public static func jumpToSystemSetting(){
+    static func jumpToSystemSetting(){
         jumpToSystemSetting(url: UIApplication.openSettingsURLString)
     }
     
     // 是否开启远程通知
-    public static func isOpenRemoteNotification() -> Bool {
+    static func isOpenRemoteNotification() -> Bool {
         return UIApplication.shared.isRegisteredForRemoteNotifications
     }
     
     // 评分
-    public static func jumpToScore() {
+    static func jumpToScore() {
         let metalkAppStoreUrl: String = String.init(format: "https://itunes.apple.com/app/id%@?mt=8", kAPPId)
         jumpToSystemSetting(url: metalkAppStoreUrl)
     }
     
     // 语言
-    public static func language() -> String {
+    static func language() -> String {
         let preferredLang = Bundle.getLanguage()
         switch String(describing: preferredLang) {
         case "en-US", "en-CN":
@@ -52,21 +52,21 @@ public struct SystemBridge {
         }
     }
     
-    public static func isChinese() -> Bool{
+    static func isChinese() -> Bool{
         if language() == "en" {
             return false
         }
         return true
     }
     
-    public static func appVersion() -> String {
+    static func appVersion() -> String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"]
         return version as! String
     }
     
     
     //获取当前tabbar上的顶部的控制器
-    public static func getTabBarTopController() -> UIViewController? {
+    static func getTabBarTopController() -> UIViewController? {
         let vc = UIApplication.shared.keyWindow?.rootViewController
         let tabbarVC = vc?.children.last as? UITabBarController
         let selectNav = tabbarVC?.selectedViewController as? UINavigationController
@@ -74,7 +74,7 @@ public struct SystemBridge {
     }
     
     ///获取当前控制器
-    public static func currentViewController() -> UIViewController?{
+    static func currentViewController() -> UIViewController?{
         // 注意：因为侧滑是加到rootViewController上作为子控制器的，所以first是menu的侧滑控制器，第二个也就是最后一个控制器才是tabBarVc
         var vc = UIApplication.shared.keyWindow?.rootViewController
         if vc?.children.last != nil {
@@ -101,7 +101,7 @@ public struct SystemBridge {
     
     
     // 找到当前显示的window
-    public static func getCurrentWindow() -> UIWindow? {
+    static func getCurrentWindow() -> UIWindow? {
         // 找到当前显示的UIWindow
         var window: UIWindow? = UIApplication.shared.keyWindow
         /**
@@ -120,20 +120,20 @@ public struct SystemBridge {
     }
     
     /* 递归找最上面的viewController */
-    public static func topViewController() -> UIViewController? {
+    static func topViewController() -> UIViewController? {
         return self.topViewControllerWithRootViewController(viewController: self.getCurrentWindow()?.rootViewController)
     }
 
-    public static func tabBarController() -> UITabBarController? {
+    static func tabBarController() -> UITabBarController? {
         return rootViewController()?.children.last as? UITabBarController
     }
 
     // MARK:- 获取rootViewController
-    public static func rootViewController() -> UIViewController? {
+    static func rootViewController() -> UIViewController? {
         return Foundation.keyWindow?.rootViewController
     }
     
-    public static func topViewControllerWithRootViewController(viewController :UIViewController?) -> UIViewController? {
+    static func topViewControllerWithRootViewController(viewController :UIViewController?) -> UIViewController? {
         if viewController == nil {
             return nil
         }
@@ -151,7 +151,7 @@ public struct SystemBridge {
         }
     }
     
-    public static func isASPackage() -> Bool{
+    static func isASPackage() -> Bool{
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
         if build.toInt() == 0{
             return false
