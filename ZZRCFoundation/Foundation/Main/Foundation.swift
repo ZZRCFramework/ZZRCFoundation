@@ -9,6 +9,7 @@ import WCDBSwift
 import HandyJSON
 import CryptoSwift
 import IQKeyboardManagerSwift
+import UIDeviceIdentifier
 
 public struct Foundation {
     /// default edge to left or right
@@ -58,8 +59,6 @@ public struct Foundation {
     public static let ISIPHONEPlus = WINDOW_HEIGHT - 736.0 == 0
     public static let ISHairScreen = ISIPHONEX || ISIPHONEXR
     
-    public static let lonDelta = 0.005
-    public static let latDelta = 0.005
     
     //按当前屏幕宽高比适配后的宽度和高度
     public static func SCALE_WIDTH(_ width:CGFloat) -> CGFloat {
@@ -124,7 +123,17 @@ public struct Foundation {
             return String(format: "%.2fKB", value * 1000.0)
         }
     }
+    /// 设备的名字 如 iPhone X
+    public var platformString: String {
+        return UIDeviceHardware.platformString()
+    }
     
+    /// 是否打开输入框自适应
+    /// - Parameter isOpen: 是否打开
+    public func configIQ(state isOpen: Bool) {
+        IQKeyboardManager.shared.enable = isOpen
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = isOpen
+    }
 }
 //异步线程
 public func globalAsync(_ block: @escaping()->()){

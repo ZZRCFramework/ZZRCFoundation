@@ -11,11 +11,11 @@ import Moya
 
 
 struct Network<Type: NetTargetType> {
-    public static func dyRequest(target: Type,_ complete: WSRequestCompleteBlock?) {
+    public static func dyRequest(target: Type,_ complete: RequestCompleteBlock?) {
         if target.isCache {
             NetCache.getCache(request: target, complete: { (error, data, result) -> (Void) in
                 if result != nil {
-                    complete?(WSResult.init(cache: result!))
+                    complete?(NetResult.init(cache: result!))
                 }
             })
         }
@@ -35,9 +35,9 @@ struct Network<Type: NetTargetType> {
             case let .success(moyaResponse):
                 do {
                     guard let json =  try moyaResponse.mapJSON() as? [String:Any] else {
-                        let aError = NSError(domain: DYNetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : "json error"])
+                        let aError = NSError(domain: NetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : "json error"])
                         safeAsync {
-                            complete?(WSResult.init(error: aError))
+                            complete?(NetResult.init(error: aError))
                         }
                         return}
                     var code = 0
@@ -46,7 +46,7 @@ struct Network<Type: NetTargetType> {
                     }
                     if code == ErrorCode.success.rawValue {
                         safeAsync {
-                            complete?(WSResult.init(value: json))
+                            complete?(NetResult.init(value: json))
                         }
                         //加缓存
                         if target.isCache {
@@ -65,24 +65,24 @@ struct Network<Type: NetTargetType> {
 //                            LoginServer.loginOut()
 //                            LoginServer.shared.imManager?.configureSocketError(error: .tokenError)
                         }
-                        let error = NSError(domain: DYNetworkDomain, code: code, userInfo: [NSLocalizedDescriptionKey : msg])
+                        let error = NSError(domain: NetworkDomain, code: code, userInfo: [NSLocalizedDescriptionKey : msg])
                         safeAsync {
-                            complete?(WSResult.init(error: error))
+                            complete?(NetResult.init(error: error))
                         }
                     }
                     Print("url:\(target.baseURL.absoluteString + target.path) \n params:\(target.resultParams) \n response:\(json)\n header:\(String(describing: target.headers))")
                 }catch{
                     //json 解析失败
                     safeAsync {
-                        complete?(WSResult.init(error: error as NSError))
+                        complete?(NetResult.init(error: error as NSError))
                     }
                     Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n error:\(error)")
                 }
                 break
             case let .failure(error):
-                let aError = NSError(domain: DYNetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : error.localizedDescription])
+                let aError = NSError(domain: NetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : error.localizedDescription])
                 safeAsync {
-                    complete?(WSResult.init(error: aError))
+                    complete?(NetResult.init(error: aError))
                 }
                 Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n error:\(error)")
                 break

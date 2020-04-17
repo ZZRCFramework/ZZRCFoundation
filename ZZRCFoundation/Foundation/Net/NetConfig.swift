@@ -14,8 +14,6 @@ public enum ErrorCode: Int {
     case jsonError = 10087 //json解析失败
     case netError = -999 //网络错误
     case timeOut = 408  //请求超时
-    case blackList = 505 //在黑名单
-    case norFriend = 506 //不是好友
 
     // 业务的错误码 举个🌰
     case loginFaild = 9000 //登录失败
@@ -36,30 +34,29 @@ public enum ErrorCode: Int {
 /// - success: 成功的回调
 /// - cache: 缓存获取
 /// - failure: 失败的回调
-public enum WSResult<WST, Error: NSError> {
+public enum NetResult<Value, Error> {
     
-    case success(WST)
-    case cache(WST)
+    case success(Value)
+    case cache(Value)
     case failure(Error)
 
-    public init(value: WST) {
+    public init(value: Value) {
         self = .success(value)
     }
     
-    public init(cache: WST) {
+    public init(cache: Value) {
         self = .cache(cache)
     }
     
     public init(error: Error) {
         self = .failure(error)
     }
-    
 }
 
-public let DYNetworkDomain = "Network.domain"
+public let NetworkDomain = "Network.domain"
 
 typealias NetWorkResultBlock = (_ error: NSError? ,_ result: [String:Any]?) -> (Void)
 
-typealias DYRequestCompleteBlock = (_ error: NSError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
+typealias DataRequestCompleteBlock = (_ error: NSError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
 
-typealias WSRequestCompleteBlock = (WSResult<[String:Any], NSError>)->(Void)
+typealias RequestCompleteBlock = (NetResult<[String:Any], NSError>)->(Void)

@@ -29,7 +29,7 @@ public protocol NetTargetType: TargetType {
     ///
     /// - Parameters:
     ///
-    func request(complete: ((WSResult<[String:Any], NSError>)->(Void))?)
+    func request(complete: ((NetResult<[String:Any], NSError>)->(Void))?)
 }
 
 
@@ -76,7 +76,7 @@ extension NetTargetType {
     }
     
     //MARK: Request
-    func request(complete: ((WSResult<[String : Any], NSError>) -> (Void))?) {
+    func request(complete: ((NetResult<[String : Any], NSError>) -> (Void))?) {
         Network.dyRequest(target: self, complete)
     }
 }

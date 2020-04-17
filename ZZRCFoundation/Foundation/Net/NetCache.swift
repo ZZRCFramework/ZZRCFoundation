@@ -14,14 +14,14 @@ struct  NetCache {
         CacheTool.shared.store(obj: data, key: getCacheKey(request: request))
     }
     
-    public static func getCache(request: NetTargetType, complete: DYRequestCompleteBlock?) {
+    public static func getCache(request: NetTargetType, complete: DataRequestCompleteBlock?) {
         CacheTool.shared.getObject(key: getCacheKey(request: request)) { (data) -> (Void) in
             guard data != nil else {
                 return
             }
             do {
                 if let dict = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String : Any] {
-                    let error = NSError.init(domain: DYNetworkDomain, code: ErrorCode.cache.rawValue, userInfo: nil)
+                    let error = NSError.init(domain: NetworkDomain, code: ErrorCode.cache.rawValue, userInfo: nil)
                     safeAsync {
                         complete?(error,data,dict)
                     }
@@ -78,7 +78,7 @@ class CacheTool: NSObject {
     var maxDiskCacheSize: Int = 500 * 1024 * 1024 //硬盘最大存储空间
 
     lazy var ioQueue: DispatchQueue = {
-        let queue = DispatchQueue.init(label: "dyCache.ioQueue")
+        let queue = DispatchQueue.init(label: "cache.ioQueue")
         return queue
     }()
     
