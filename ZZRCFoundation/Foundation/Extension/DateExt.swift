@@ -88,14 +88,14 @@ public extension Date {
     /// 格式化日期 2018-07-04
     ///
     /// - Returns: 222
-    public func getpointDate() -> String {
+    func getpointDate() -> String {
         return self.stringWithDateFormat(dateFormat: "yyyy-MM-dd")
     }
     
     /// 格式化日期 07/04
     ///
     /// - Returns:07/04
-    public func getMMDD() -> String {
+    func getMMDD() -> String {
         return self.stringWithDateFormat(dateFormat: "MM/dd")
     }
     
@@ -103,11 +103,11 @@ public extension Date {
     /// 格式化时间
     ///
     /// - Returns: 12:30
-    public func getHour() -> String {
+    func getHour() -> String {
         return self.stringWithDateFormat(dateFormat: "HH:mm")
     }
     
-    public static func formatHour(hour: String?) -> Date? {
+    static func formatHour(hour: String?) -> Date? {
         guard let `hour` = hour else { return nil }
         let formatter = DateFormatter()
         let current = Date().stringWithNoSeconds()
@@ -146,7 +146,7 @@ public extension Date {
 
 
 //MARK:helper
-extension Date {
+public extension Date {
     
     /// 获取指定时间之间的天数
     ///
