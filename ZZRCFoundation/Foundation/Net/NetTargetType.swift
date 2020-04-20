@@ -33,7 +33,7 @@ public protocol NetTargetType: TargetType {
 }
 
 
-extension NetTargetType {
+public extension NetTargetType {
     
     //是否使用loading
     var isLoading: Bool {
