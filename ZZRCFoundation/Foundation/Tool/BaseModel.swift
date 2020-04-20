@@ -30,8 +30,8 @@ open class BaseModel: NSObject,HandyJSON {
     }
     
     required override public init() {}
-    public func mapping(mapper: HelpingMapper) {}
-    public func didFinishMapping() {}
+    open func mapping(mapper: HelpingMapper) {}
+    open func didFinishMapping() {}
 }
 
 public extension TableDecodable where Self: BaseModel {

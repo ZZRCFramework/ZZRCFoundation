@@ -641,14 +641,14 @@ public extension String {
     }
 }
 
-extension Array where Element == UInt8 {
+public extension Array where Element == UInt8 {
     var hexString: String {
         return self.compactMap { String(format: "%02x", $0).uppercased() }
             .joined(separator: "")
     }
 }
 
-extension String.StringInterpolation {
+public extension String.StringInterpolation {
     /// 提供 `Optional` 字符串插值
     /// 而不必强制使用 `String(describing:)`
     /// 可选值插值样式
