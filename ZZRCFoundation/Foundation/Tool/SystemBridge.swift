@@ -130,7 +130,7 @@ public struct SystemBridge {
 
     // MARK:- 获取rootViewController
     public static func rootViewController() -> UIViewController? {
-        return Foundation.keyWindow?.rootViewController
+        return ZZFoundation.keyWindow?.rootViewController
     }
     
     public static func topViewControllerWithRootViewController(viewController :UIViewController?) -> UIViewController? {

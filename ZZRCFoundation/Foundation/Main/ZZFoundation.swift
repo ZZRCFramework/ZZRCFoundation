@@ -11,7 +11,7 @@ import CryptoSwift
 import IQKeyboardManagerSwift
 import UIDeviceIdentifier
 
-public struct Foundation {
+public struct ZZFoundation {
     /// default edge to left or right
     public static let kLeftEdge: CGFloat = 20
     

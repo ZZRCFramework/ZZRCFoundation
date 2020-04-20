@@ -18,7 +18,7 @@
 		7EB1542124495FC4007D4A53 /* NetTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541C24495FC3007D4A53 /* NetTargetType.swift */; };
 		7EB1542224495FC4007D4A53 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541D24495FC3007D4A53 /* Network.swift */; };
 		7EB1542324495FC4007D4A53 /* NetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541E24495FC4007D4A53 /* NetConfig.swift */; };
-		7EB1542724496337007D4A53 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1542624496337007D4A53 /* Foundation.swift */; };
+		7EB1542724496337007D4A53 /* ZZFoundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1542624496337007D4A53 /* ZZFoundation.swift */; };
 		7EB1543A24496B8C007D4A53 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1542B24496B8C007D4A53 /* StringExt.swift */; };
 		7EB1543B24496B8C007D4A53 /* DictionaryExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1542C24496B8C007D4A53 /* DictionaryExt.swift */; };
 		7EB1543F24496B8C007D4A53 /* BundleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1543024496B8C007D4A53 /* BundleExt.swift */; };
@@ -47,7 +47,7 @@
 		7EB1541C24495FC3007D4A53 /* NetTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetTargetType.swift; sourceTree = "<group>"; };
 		7EB1541D24495FC3007D4A53 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		7EB1541E24495FC4007D4A53 /* NetConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetConfig.swift; sourceTree = "<group>"; };
-		7EB1542624496337007D4A53 /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
+		7EB1542624496337007D4A53 /* ZZFoundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZZFoundation.swift; sourceTree = "<group>"; };
 		7EB1542B24496B8C007D4A53 /* StringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		7EB1542C24496B8C007D4A53 /* DictionaryExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExt.swift; sourceTree = "<group>"; };
 		7EB1543024496B8C007D4A53 /* BundleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleExt.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 		7EB15470244989A7007D4A53 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				7EB1542624496337007D4A53 /* Foundation.swift */,
+				7EB1542624496337007D4A53 /* ZZFoundation.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -302,7 +302,7 @@
 			files = (
 				7EB1541F24495FC4007D4A53 /* NetCache.swift in Sources */,
 				7EB1540824493AB4007D4A53 /* ViewController.swift in Sources */,
-				7EB1542724496337007D4A53 /* Foundation.swift in Sources */,
+				7EB1542724496337007D4A53 /* ZZFoundation.swift in Sources */,
 				7EB1542224495FC4007D4A53 /* Network.swift in Sources */,
 				7EB1543A24496B8C007D4A53 /* StringExt.swift in Sources */,
 				7EB1544924496E21007D4A53 /* SystemBridge.swift in Sources */,
