@@ -14,31 +14,40 @@ open class DataBaseManager: NSObject {
     
     open var commonDataBase: Database
     open var userDataBase: Database?
-
-    override init() {
+    private var isEncrypt = false
+    public convenience init(isEncrypt: Bool = false) {
+        self.init()
+        self.isEncrypt = isEncrypt
+        self.initCommonDB()
+    }
+   
+    override public init() {
         let commonDBPath = "common.db".documentPath()
-        let database = Database(withPath: commonDBPath)
-//        let key = DBConfigure.commonCipKey
-//        let data = key.data(using: String.Encoding.ascii)
-//        database.setCipher(key: data,pageSize: 1024)
-        self.commonDataBase = database
+        commonDataBase = Database(withPath: commonDBPath)
         Print(commonDBPath)
     }
     
+    private func initCommonDB(){
+        if isEncrypt {
+            let key = DBConfigure.commonCipKey
+            let data = key.data(using: String.Encoding.ascii)
+            commonDataBase.setCipher(key: data,pageSize: 1024)
+        }
+    }
     //登陆成功时初始化当前用户的db
     public class func getUserDB(userId: String) -> Database?{
         guard let dataBase = DataBaseManager.shared.userDataBase else {
             let database = Database(withPath: "\(userId.md5()).db".documentPath())
-//            let key = DBConfigure.commonCipKey
-//            let data = key.data(using: String.Encoding.ascii)
-//            database.setCipher(key: data,pageSize: 1024)
+            if DataBaseManager.shared.isEncrypt {
+                let key = DBConfigure.commonCipKey
+                let data = key.data(using: String.Encoding.ascii)
+                database.setCipher(key: data,pageSize: 1024)
+            }
             DataBaseManager.shared.userDataBase = database
             return database
         }
         return dataBase
     }
-    
-    
 }
 
 struct DBConfigure {

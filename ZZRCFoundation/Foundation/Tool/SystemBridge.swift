@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-private let kAPPId = ""
 
 public struct SystemBridge {
     
@@ -33,9 +32,11 @@ public struct SystemBridge {
         return UIApplication.shared.isRegisteredForRemoteNotifications
     }
     
-    // 评分
-    public static func jumpToScore() {
-        let metalkAppStoreUrl: String = String.init(format: "https://itunes.apple.com/app/id%@?mt=8", kAPPId)
+    
+    /// 跳转到商店
+    /// - Parameter appid: 应用在APPConnect上的的ID
+    public static func jumpToScore(_ appid: String) {
+        let metalkAppStoreUrl: String = String(format: "https://itunes.apple.com/app/id%@?mt=8", appid)
         jumpToSystemSetting(url: metalkAppStoreUrl)
     }
     
@@ -61,9 +62,13 @@ public struct SystemBridge {
     
     public static func appVersion() -> String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"]
-        return version as! String
+        return version as? String ?? ""
     }
     
+    public static func bundleIdentifier() -> String {
+        let identifier = Bundle.main.infoDictionary?["CFBundleIdentifier"]
+        return identifier as? String ?? ""
+    }
     
     //获取当前tabbar上的顶部的控制器
     public static func getTabBarTopController() -> UIViewController? {
