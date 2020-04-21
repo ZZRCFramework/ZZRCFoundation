@@ -124,13 +124,13 @@ public struct ZZFoundation {
         }
     }
     /// 设备的名字 如 iPhone X
-    public var platformString: String {
+    public static var platformString: String {
         return UIDeviceHardware.platformString()
     }
     
     /// 是否打开输入框自适应
     /// - Parameter isOpen: 是否打开
-    public func configIQ(state isOpen: Bool) {
+    public static func configIQ(state isOpen: Bool) {
         IQKeyboardManager.shared.enable = isOpen
         IQKeyboardManager.shared.shouldResignOnTouchOutside = isOpen
     }
