@@ -45,9 +45,6 @@ public struct ZZFoundation {
     public static let WINDOW_BOUNDS = UIScreen.main.bounds
     public static let SCREENSCALE = UIScreen.main.scale
     
-    //屏幕宽高比
-    public static let WINDOW_WIDTH_SCALE = UIScreen.main.bounds.size.width / 375
-    public static let WINDOW_HEIGHT_SCALE = UIScreen.main.bounds.size.height / 667
     public static let keyWindow = UIApplication.shared.delegate?.window as? UIWindow
     
     //设备 根据宽高判断
@@ -60,7 +57,7 @@ public struct ZZFoundation {
     public static let ISHairScreen = ISIPHONEX || ISIPHONEXR
     
     
-    //按当前屏幕宽高比适配后的宽度和高度
+    //按当前屏幕宽高比适配后的宽度和高度 以 6 7 8 为基准
     public static func SCALE_WIDTH(_ width:CGFloat) -> CGFloat {
         return UIScreen.main.bounds.size.width / 375 * width
     }
@@ -68,7 +65,16 @@ public struct ZZFoundation {
         return UIScreen.main.bounds.size.height / 667 * height
     }
     
-    //适配iPhone X的 方法
+    //按当前屏幕宽高比适配后的宽度和高度 以 x xs 11pro  为基准
+    public static func SCALE_HAIR_WIDTH(_ width:CGFloat) -> CGFloat {
+        return UIScreen.main.bounds.size.width / 375 * width
+    }
+    public static func SCALE_HAIR_HEIGHT(_ height:CGFloat) -> CGFloat {
+        return UIScreen.main.bounds.size.height / 812 * height
+    }
+    
+    
+    //如果设计稿是以 6 7 8尺寸出的  适配iPhone 刘海 的 方法
     public static func ajustTopEdgeOnIPhoneX(_ edge :CGFloat) -> CGFloat{
         if ISHairScreen {
             return edge + 24;
@@ -79,6 +85,21 @@ public struct ZZFoundation {
     public static func ajustBottomEdgeOnIPhoneX(_ edge :CGFloat) -> CGFloat{
         if ISHairScreen {
             return edge + 34;
+        }
+        return edge;
+    }
+    
+    //如果设计稿是以 x xs 11 pro 尺寸出的  适配非全面屏 的 方法
+    public static func ajustTopEdgeOnNormal(_ edge :CGFloat) -> CGFloat{
+        if !ISHairScreen {
+            return edge - 24;
+        }
+        return edge;
+    }
+    
+    public static func ajustBottomEdgeOnNormal(_ edge :CGFloat) -> CGFloat{
+        if !ISHairScreen {
+            return edge - 34;
         }
         return edge;
     }
