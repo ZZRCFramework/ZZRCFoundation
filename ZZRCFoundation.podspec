@@ -133,7 +133,7 @@ Pod::Spec.new do |s|
 
    s.dependency "KeychainAccess", "4.1.0"
    s.dependency "IQKeyboardManagerSwift", "6.5.5"
-   s.dependency "RxSwift", "5.1.0"
+   s.dependency "RxSwift", "5.1.1"
    s.dependency "Moya/RxSwift", "14.0"
    s.dependency "Alamofire", "5.0.4"
    s.dependency "HandyJSON", "5.0.2-beta"
