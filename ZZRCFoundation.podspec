@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "ZZRCFoundation/Foundation/**/*.swift"
-  s.resource     = 'ZZRCFoundation/Foundation/Main/.db'
+  s.resource      = "ZZRCFoundation/Foundation/Main/.db"
 
   # s.public_header_files = "Classes/**/*.h"
 
