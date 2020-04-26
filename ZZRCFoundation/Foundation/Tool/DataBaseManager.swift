@@ -19,7 +19,8 @@ open class DataBaseManager: NSObject {
    
     override public init() {
         let commonDBPath = "common.db".documentPath()
-        let bundlePath = Bundle.main.path(forResource: "common.db", ofType: "") ?? ""
+        let bundle = Bundle.init(for: DataBaseManager.classForCoder())
+        let bundlePath = bundle.path(forResource: "common.db", ofType: "") ?? ""
         SandboxFilePath.copy(from: bundlePath, to: commonDBPath)
         commonDataBase = Database(withPath: commonDBPath)
         Print(commonDBPath)
