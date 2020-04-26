@@ -12,13 +12,15 @@ import WCDBSwift
 open class DataBaseManager: NSObject {
     public static let shared = DataBaseManager()
     
-    open var commonDataBase: Database?
+    open var commonDataBase: Database
     open var userDataBase: Database?
     open var isEncrypt = false
    
    
     override public init() {
         let commonDBPath = "common.db".documentPath()
+        let bundlePath = Bundle.main.path(forResource: "common.db", ofType: "") ?? ""
+        SandboxFilePath.copy(from: bundlePath, to: commonDBPath)
         commonDataBase = Database(withPath: commonDBPath)
         Print(commonDBPath)
     }
@@ -27,7 +29,7 @@ open class DataBaseManager: NSObject {
         if isEncrypt {
             let key = DBConfigure.commonCipKey
             let data = key.data(using: String.Encoding.ascii)
-            commonDataBase?.setCipher(key: data,pageSize: 1024)
+            commonDataBase.setCipher(key: data,pageSize: 1024)
         }
     }
     //登陆成功时初始化当前用户的db

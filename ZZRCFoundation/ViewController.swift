@@ -13,27 +13,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Person.createTable(isCommon: true)
+        let provinces = Province.getAllAddress()
+        
+        Print(provinces[10])
     }
 }
 
-class Person: BaseModel,TableCodable {
-    var userId = ""
-      var nickName = ""
-      var sex = 0
-      var phone = ""
-      var isLogin = false
-      enum CodingKeys: String, CodingTableKey {
-          typealias Root = Person
-          static let objectRelationalMapping = TableBinding(CodingKeys.self)
-          case userId
-          case nickName
-          case isLogin
-          //        字段约束
-          static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
-              return [
-                  userId: ColumnConstraintBinding(isPrimary: true),
-              ]
-          }
-      }
-}

@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ZZRCFoundation"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "A short description of ZZRCFoundation."
 
   # This description is used to generate tags and improve search results.
@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "ZZRCFoundation/Foundation/**/*.swift"
-  # s.resource     = 'ZZRCFoundation/Source/image/.bundle'
+  s.resource     = 'ZZRCFoundation/Foundation/Main/.db'
 
   # s.public_header_files = "Classes/**/*.h"
 

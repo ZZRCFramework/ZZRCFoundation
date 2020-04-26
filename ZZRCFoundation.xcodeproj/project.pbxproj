@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		677E61A9A494A429CFFA26DE /* Pods_ZZRCFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6397F12D0D6529ED0A8927E /* Pods_ZZRCFoundation.framework */; };
+		7E7CF1202455621D000BD5C9 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7CF11F2455621D000BD5C9 /* Address.swift */; };
+		7E7CF12224556388000BD5C9 /* common.db in Resources */ = {isa = PBXBuildFile; fileRef = 7E7CF12124556388000BD5C9 /* common.db */; };
 		7EB1540424493AB4007D4A53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1540324493AB4007D4A53 /* AppDelegate.swift */; };
 		7EB1540824493AB4007D4A53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1540724493AB4007D4A53 /* ViewController.swift */; };
 		7EB1540B24493AB4007D4A53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EB1540924493AB4007D4A53 /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E7CF11F2455621D000BD5C9 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		7E7CF12124556388000BD5C9 /* common.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = common.db; sourceTree = "<group>"; };
 		7EB1540024493AB4007D4A53 /* ZZRCFoundation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZRCFoundation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB1540324493AB4007D4A53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EB1540724493AB4007D4A53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				7EB154732449A20D007D4A53 /* BaseModel.swift */,
 				7EB154772449A401007D4A53 /* Encrypt.swift */,
 				7EB154792449AEBC007D4A53 /* DataBaseManager.swift */,
+				7E7CF11F2455621D000BD5C9 /* Address.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 		7EB15470244989A7007D4A53 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				7E7CF12124556388000BD5C9 /* common.db */,
 				7EB1542624496337007D4A53 /* ZZFoundation.swift */,
 			);
 			path = Main;
@@ -247,6 +253,7 @@
 			files = (
 				7EB1541024493AB5007D4A53 /* LaunchScreen.storyboard in Resources */,
 				7EB1540D24493AB5007D4A53 /* Assets.xcassets in Resources */,
+				7E7CF12224556388000BD5C9 /* common.db in Resources */,
 				7EB1540B24493AB4007D4A53 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +327,7 @@
 				7EB1542024495FC4007D4A53 /* LoadingPlugin.swift in Sources */,
 				7EB154742449A20D007D4A53 /* BaseModel.swift in Sources */,
 				7EB1544F244971A0007D4A53 /* SwiftNotice.swift in Sources */,
+				7E7CF1202455621D000BD5C9 /* Address.swift in Sources */,
 				7EB1543B24496B8C007D4A53 /* DictionaryExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
