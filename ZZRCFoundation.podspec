@@ -101,7 +101,7 @@ Pod::Spec.new do |s|
   #  You can preserve files from being cleaned, please don't preserve
   #  non-essential files like tests, examples and documentation.
   #
-
+    s.static_framework  =  true
   # s.resource  = "icon.png"
   # s.resources = "Resources/*.png"
 
