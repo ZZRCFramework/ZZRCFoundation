@@ -55,8 +55,8 @@ public enum NetResult<Value, Error> {
 
 public let NetworkDomain = "Network.domain"
 
-typealias NetWorkResultBlock = (_ error: NSError? ,_ result: [String:Any]?) -> (Void)
+public typealias NetWorkResultBlock = (_ error: NSError? ,_ result: [String:Any]?) -> (Void)
 
 typealias DataRequestCompleteBlock = (_ error: NSError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
 
-typealias RequestCompleteBlock = (NetResult<[String:Any], NSError>)->(Void)
+public typealias RequestCompleteBlock = (NetResult<[String:Any], NSError>)->(Void)
