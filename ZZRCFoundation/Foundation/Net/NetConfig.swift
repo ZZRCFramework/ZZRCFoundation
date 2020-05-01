@@ -7,7 +7,7 @@
 //
 
 public enum ErrorCode: Int {
-    case success = 200  //请求成功
+    case success = 0  //请求成功
     case tokenError = 9400  //请求成功
     case cache = 10086 //从缓存中读取
     case serverError = 500 //服务器内部错误
@@ -54,6 +54,9 @@ public enum NetResult<Value, Error> {
 }
 
 public let NetworkDomain = "Network.domain"
+public let NetBodyKey = "body"
+public let NetCodeKey = "code"
+public let NetMessageKey = "message"
 
 public typealias NetWorkResultBlock = (_ error: NSError? ,_ result: [String:Any]?) -> (Void)
 

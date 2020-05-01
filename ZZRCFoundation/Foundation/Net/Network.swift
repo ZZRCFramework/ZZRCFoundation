@@ -11,6 +11,7 @@ import Moya
 
 
 struct Network<Type: NetTargetType> {
+        //返回参数 结构  {code: 0, message: this is a message, body:{}}
     public static func dyRequest(target: Type,_ complete: RequestCompleteBlock?) {
         if target.isCache {
             NetCache.getCache(request: target, complete: { (error, data, result) -> (Void) in
@@ -41,7 +42,7 @@ struct Network<Type: NetTargetType> {
                         }
                         return}
                     var code = 0
-                    if let codeString = json["code"] {
+                    if let codeString = json[NetCodeKey] {
                         code = codeString as? Int ?? 0
                     }
                     if code == ErrorCode.success.rawValue {
@@ -54,10 +55,7 @@ struct Network<Type: NetTargetType> {
                         }
                     }else{
                         var msg = "网络错误".localized
-                        if let message = json["message"] {
-                            msg = message as? String ?? "unknown error"
-                        }
-                        if let message = json["msg"] {
+                        if let message = json[NetMessageKey] {
                             msg = message as? String ?? "unknown error"
                         }
                         if code == ErrorCode.tokenError.rawValue {
