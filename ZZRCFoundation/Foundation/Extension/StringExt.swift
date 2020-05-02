@@ -341,6 +341,13 @@ public extension String {
         return ciper
     }
     
+    func cipherName() -> String {
+        if self.length < 2 { return "*" }
+        let ciper = "*" + String(self.last!)
+        return ciper
+    }
+    
+    
     // 比如 FF32424 -> F****4
     func cipherPassportNumber() -> String? {
         if self.length < 2 { return nil }
