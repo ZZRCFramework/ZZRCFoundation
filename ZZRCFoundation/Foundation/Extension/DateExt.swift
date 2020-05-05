@@ -16,7 +16,7 @@ public extension Date {
     static func dateWithTimeStamp(timeStamp: Double) -> Date {
         var aTimeStamp = timeStamp
         if timeStamp > 140000000000 {
-            aTimeStamp = aTimeStamp
+            aTimeStamp = aTimeStamp / 1000
         }
         return Date(timeIntervalSince1970: aTimeStamp)
     }
