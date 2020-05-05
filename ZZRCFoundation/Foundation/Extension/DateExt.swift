@@ -16,7 +16,7 @@ public extension Date {
     static func dateWithTimeStamp(timeStamp: Double) -> Date {
         var aTimeStamp = timeStamp
         if timeStamp > 140000000000 {
-            aTimeStamp = aTimeStamp / 1000.0
+            aTimeStamp = aTimeStamp
         }
         return Date(timeIntervalSince1970: aTimeStamp)
     }
@@ -25,7 +25,7 @@ public extension Date {
     ///
     /// - Returns: timeStampString
     func timeStamp() -> String {
-        let timeStamp = Int64(self.timeIntervalSince1970 * 1000.0)
+        let timeStamp = Int64(self.timeIntervalSince1970)
         return String(timeStamp)
     }
     

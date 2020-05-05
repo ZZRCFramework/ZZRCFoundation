@@ -511,12 +511,12 @@ public extension String {
     ///
     /// - Returns: 时间
     func timeStampToDate() -> String{
-        let date = Date(timeIntervalSince1970: self.toDouble()/1000)
+        let date = Date(timeIntervalSince1970: self.toDouble())
         return date.getpointDate()
     }
     
     func timeStampToMMDD() -> String {
-        let date = Date(timeIntervalSince1970: self.toDouble()/1000)
+        let date = Date(timeIntervalSince1970: self.toDouble())
         return date.getMMDD()
     }
     
@@ -526,7 +526,7 @@ public extension String {
     func toDate() -> Date {
         var date: Date?
         if self.toDouble() > 0 {
-            date = Date(timeIntervalSince1970: self.toDouble()/1000)
+            date = Date(timeIntervalSince1970: self.toDouble())
         }
         else {
             let formatter = DateFormatter()
@@ -568,7 +568,7 @@ public extension String {
         formatter.dateFormat = "EE MM dd HH:mm:ss Z yyyy"
         formatter.locale = Locale(identifier: "en")
         
-        let createDate = Date(timeIntervalSince1970: self.toDouble()/1000.0) //创建一个日历类
+        let createDate = Date(timeIntervalSince1970: self.toDouble()) //创建一个日历类
         let calendar = Calendar.current
         var formatterSr = "HH:mm"
         
@@ -606,7 +606,7 @@ public extension String {
         formatter.dateFormat = "EE MM dd HH:mm:ss Z yyyy"
         formatter.locale = Locale(identifier: "en")
         
-        let createDate = Date(timeIntervalSince1970: self.toDouble()/1000.0) //创建一个日历类
+        let createDate = Date(timeIntervalSince1970: self.toDouble()) //创建一个日历类
         let formatterSr = "HH:mm"
         formatter.dateFormat = formatterSr
         result = formatter.string(from: createDate)
