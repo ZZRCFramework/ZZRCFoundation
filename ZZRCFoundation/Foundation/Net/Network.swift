@@ -11,7 +11,7 @@ import Moya
 
 
 struct Network<Type: NetTargetType> {
-        //返回参数 结构  {code: 0, message: this is a message, body:{}}
+    //返回参数 结构  {code: 0, message: this is a message, body:{}}
     public static func dyRequest(target: Type,_ complete: RequestCompleteBlock?) {
         if target.isCache {
             NetCache.getCache(request: target, complete: { (error, data, result) -> (Void) in
@@ -35,16 +35,15 @@ struct Network<Type: NetTargetType> {
             switch result {
             case let .success(moyaResponse):
                 do {
-                    guard let json =  try moyaResponse.mapJSON() as? [String:Any] else {
+                    guard let json =  try moyaResponse.mapJSON() as? [String:Any], let code = json[NetCodeKey] as? Int  else {
                         let aError = NSError(domain: NetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : "json error"])
                         safeAsync {
                             complete?(NetResult.init(error: aError))
                         }
-                        return}
-                    var code = 0
-                    if let codeString = json[NetCodeKey] {
-                        code = codeString as? Int ?? 0
+                        Print("url:\(target.baseURL.absoluteString + target.path) \n params:\(target.resultParams) \n response: null \n header:\(String(describing: target.headers))")
+                        return
                     }
+                    
                     if code == ErrorCode.success.rawValue {
                         safeAsync {
                             complete?(NetResult.init(value: json))
@@ -57,11 +56,6 @@ struct Network<Type: NetTargetType> {
                         var msg = "网络错误".localized
                         if let message = json[NetMessageKey] {
                             msg = message as? String ?? "unknown error"
-                        }
-                        if code == ErrorCode.tokenError.rawValue {
-                            //token 失效  做退出登录操作
-//                            LoginServer.loginOut()
-//                            LoginServer.shared.imManager?.configureSocketError(error: .tokenError)
                         }
                         let error = NSError(domain: NetworkDomain, code: code, userInfo: [NSLocalizedDescriptionKey : msg])
                         safeAsync {
