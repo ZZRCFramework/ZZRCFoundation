@@ -26,7 +26,7 @@ public protocol NetTargetType: TargetType {
     
     var timeoutInterval: TimeInterval { get }
     
-    var plugins: [PluginType] { get }
+    var plugins: [PluginType]? { get }
     
     /// 网络请求方法
     ///
@@ -77,6 +77,11 @@ public extension NetTargetType {
     var isCache: Bool {
         return false
     }
+    
+    var plugins: [PluginType]? {
+        return nil
+    }
+
     
     //MARK: Request
     func request(complete: ((NetResult<[String : Any], NSError>) -> (Void))?) {
