@@ -25,6 +25,9 @@ public protocol NetTargetType: TargetType {
     var resultParams: [String:Any] { get }
     
     var timeoutInterval: TimeInterval { get }
+    
+    var plugins: [PluginType] { get }
+    
     /// 网络请求方法
     ///
     /// - Parameters:

@@ -30,7 +30,7 @@ struct Network<Type: NetTargetType> {
                 Print("error:\(error)")
             }
         }
-        let provider = MoyaProvider<Type>(requestClosure: requestTimeoutClosure, plugins: [LoadingPlugin()])
+        let provider = MoyaProvider<Type>(requestClosure: requestTimeoutClosure, plugins: target.plugins)
         provider.request(target) { (result) in
             switch result {
             case let .success(moyaResponse):

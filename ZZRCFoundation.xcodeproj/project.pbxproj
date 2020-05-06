@@ -16,7 +16,6 @@
 		7EB1540D24493AB5007D4A53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EB1540C24493AB5007D4A53 /* Assets.xcassets */; };
 		7EB1541024493AB5007D4A53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EB1540E24493AB5007D4A53 /* LaunchScreen.storyboard */; };
 		7EB1541F24495FC4007D4A53 /* NetCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541A24495FC3007D4A53 /* NetCache.swift */; };
-		7EB1542024495FC4007D4A53 /* LoadingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541B24495FC3007D4A53 /* LoadingPlugin.swift */; };
 		7EB1542124495FC4007D4A53 /* NetTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541C24495FC3007D4A53 /* NetTargetType.swift */; };
 		7EB1542224495FC4007D4A53 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541D24495FC3007D4A53 /* Network.swift */; };
 		7EB1542324495FC4007D4A53 /* NetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1541E24495FC4007D4A53 /* NetConfig.swift */; };
@@ -28,8 +27,6 @@
 		7EB1544424496B8C007D4A53 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1543524496B8C007D4A53 /* DateExt.swift */; };
 		7EB1544924496E21007D4A53 /* SystemBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1544824496E21007D4A53 /* SystemBridge.swift */; };
 		7EB1544B24496F53007D4A53 /* SandboxFilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1544A24496F53007D4A53 /* SandboxFilePath.swift */; };
-		7EB1544D24497192007D4A53 /* HUDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1544C24497192007D4A53 /* HUDHelper.swift */; };
-		7EB1544F244971A0007D4A53 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1544E244971A0007D4A53 /* SwiftNotice.swift */; };
 		7EB1547224499FA9007D4A53 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1547124499FA9007D4A53 /* Keychain.swift */; };
 		7EB154742449A20D007D4A53 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB154732449A20D007D4A53 /* BaseModel.swift */; };
 		7EB154782449A401007D4A53 /* Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB154772449A401007D4A53 /* Encrypt.swift */; };
@@ -47,7 +44,6 @@
 		7EB1540F24493AB5007D4A53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EB1541124493AB5007D4A53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EB1541A24495FC3007D4A53 /* NetCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetCache.swift; sourceTree = "<group>"; };
-		7EB1541B24495FC3007D4A53 /* LoadingPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingPlugin.swift; sourceTree = "<group>"; };
 		7EB1541C24495FC3007D4A53 /* NetTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetTargetType.swift; sourceTree = "<group>"; };
 		7EB1541D24495FC3007D4A53 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		7EB1541E24495FC4007D4A53 /* NetConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetConfig.swift; sourceTree = "<group>"; };
@@ -59,8 +55,6 @@
 		7EB1543524496B8C007D4A53 /* DateExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		7EB1544824496E21007D4A53 /* SystemBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemBridge.swift; sourceTree = "<group>"; };
 		7EB1544A24496F53007D4A53 /* SandboxFilePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SandboxFilePath.swift; sourceTree = "<group>"; };
-		7EB1544C24497192007D4A53 /* HUDHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDHelper.swift; sourceTree = "<group>"; };
-		7EB1544E244971A0007D4A53 /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		7EB1547124499FA9007D4A53 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		7EB154732449A20D007D4A53 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		7EB154772449A401007D4A53 /* Encrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypt.swift; sourceTree = "<group>"; };
@@ -136,7 +130,6 @@
 		7EB1541924495FA8007D4A53 /* Net */ = {
 			isa = PBXGroup;
 			children = (
-				7EB1541B24495FC3007D4A53 /* LoadingPlugin.swift */,
 				7EB1541A24495FC3007D4A53 /* NetCache.swift */,
 				7EB1541E24495FC4007D4A53 /* NetConfig.swift */,
 				7EB1541C24495FC3007D4A53 /* NetTargetType.swift */,
@@ -161,8 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				7EB1547124499FA9007D4A53 /* Keychain.swift */,
-				7EB1544E244971A0007D4A53 /* SwiftNotice.swift */,
-				7EB1544C24497192007D4A53 /* HUDHelper.swift */,
 				7EB1544A24496F53007D4A53 /* SandboxFilePath.swift */,
 				7EB1544824496E21007D4A53 /* SystemBridge.swift */,
 				7EB154732449A20D007D4A53 /* BaseModel.swift */,
@@ -321,12 +312,9 @@
 				7EB1543F24496B8C007D4A53 /* BundleExt.swift in Sources */,
 				7EB1547224499FA9007D4A53 /* Keychain.swift in Sources */,
 				7EB1544224496B8C007D4A53 /* ArrayExt.swift in Sources */,
-				7EB1544D24497192007D4A53 /* HUDHelper.swift in Sources */,
 				7EB1542324495FC4007D4A53 /* NetConfig.swift in Sources */,
 				7EB1540424493AB4007D4A53 /* AppDelegate.swift in Sources */,
-				7EB1542024495FC4007D4A53 /* LoadingPlugin.swift in Sources */,
 				7EB154742449A20D007D4A53 /* BaseModel.swift in Sources */,
-				7EB1544F244971A0007D4A53 /* SwiftNotice.swift in Sources */,
 				7E7CF1202455621D000BD5C9 /* Address.swift in Sources */,
 				7EB1543B24496B8C007D4A53 /* DictionaryExt.swift in Sources */,
 			);
