@@ -130,7 +130,7 @@ public extension String {
     
     // 截取字符串
     func substring(from index: Int) -> String {
-        if self.length > index {
+        if self.length > index && index >= 0  {
             let startIndex = self.index(self.startIndex, offsetBy: index)
             let subString = self[startIndex..<self.endIndex]
             return String(subString)
