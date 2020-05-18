@@ -101,6 +101,10 @@ public extension String {
         formatter.numberStyle = .currency
         formatter.currencySymbol = "¥"
         if let num =  NumberFormatter().number(from: self), let result = formatter.string(from: num) {
+            let values = result.components(separatedBy: ".")
+            if let last = values.last, last.toInt() == 0, let first = values.first {
+                return first
+            }
             return result
         }
         return self
