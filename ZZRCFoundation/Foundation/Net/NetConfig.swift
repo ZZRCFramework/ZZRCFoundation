@@ -5,6 +5,7 @@
 //  Created by 田向阳 on 2017/12/21.
 //  Copyright © 2017年 田向阳. All rights reserved.
 //
+import HandyJSON
 
 public enum ErrorCode: Int {
     case success = 0  //请求成功
@@ -28,6 +29,31 @@ public enum ErrorCode: Int {
     }
 }
 
+public struct NetError: Error {
+    let code: Int
+    let message: String
+    
+    static func throwError(code: Int, message: String) -> NetError{
+        return NetError(code: code, message: message)
+    }
+}
+
+extension Error {
+    var netError: NetError {
+        return NetError.throwError(code: (self as NSError).code, message: (self as NSError).localizedDescription)
+    }
+}
+
+public struct NetModel<ContentType>: HandyJSON { // <ContentType> 这个玩儿 要遵循 handyjson协议 或者里面的元素要遵循handyjson
+    let code: Int
+    let msg: String
+    let body: ContentType?  // 鉴于网络请求返回的结构体 有可能是字典也有可能是数组 暂定值类型为 any
+    public init() {
+        self.code = 0
+        self.msg = ""
+        self.body = nil
+    }
+}
 
 /// 网络回调的基本样式
 ///
@@ -56,10 +82,8 @@ public enum NetResult<Value, Error> {
 public let NetworkDomain = "Network.domain"
 public let NetBodyKey = "body"
 public let NetCodeKey = "code"
-public let NetMessageKey = "message"
+public let NetMessageKey = "msg"
 
-public typealias NetWorkResultBlock = (_ error: NSError? ,_ result: [String:Any]?) -> (Void)
 
-typealias DataRequestCompleteBlock = (_ error: NSError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
+typealias DataRequestCompleteBlock = (_ error: NetError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
 
-public typealias RequestCompleteBlock = (NetResult<[String:Any], NSError>)->(Void)

@@ -10,14 +10,13 @@ import UIKit
 import Moya
 
 
-struct Network<Type: NetTargetType> {
+struct Network<Type: NetTargetType,ResponseBody> {
     //返回参数 结构  {code: 0, message: this is a message, body:{}}
-    public static func dyRequest(target: Type,_ complete: RequestCompleteBlock?) {
+    public static func request(target: Type,_ complete: ((NetResult<NetModel<ResponseBody>, NetError>) -> (Void))?) {
         if target.isCache {
             NetCache.getCache(request: target, complete: { (error, data, result) -> (Void) in
-                if result != nil {
-                    complete?(NetResult.init(cache: result!))
-                }
+                guard let netModel = NetModel<ResponseBody>.deserialize(from: result) else {return}
+                complete?(NetResult(cache: netModel))
             })
         }
         
@@ -34,45 +33,34 @@ struct Network<Type: NetTargetType> {
         provider.request(target) { (result) in
             switch result {
             case let .success(moyaResponse):
-                do {
-                    guard let json =  try moyaResponse.mapJSON() as? [String:Any], let code = json[NetCodeKey] as? Int  else {
-                        let aError = NSError(domain: NetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : "json error"])
-                        safeAsync {
-                            complete?(NetResult.init(error: aError))
-                        }
-                        Print("url:\(target.baseURL.absoluteString + target.path) \n params:\(target.resultParams) \n response: null \n header:\(String(describing: target.headers))")
-                        return
-                    }
-                    
-                    if code == ErrorCode.success.rawValue {
-                        safeAsync {
-                            complete?(NetResult.init(value: json))
-                        }
-                        //加缓存
-                        if target.isCache {
-                            NetCache.store(request: target, data: moyaResponse.data)
-                        }
-                    }else{
-                        var msg = "网络错误".localized
-                        if let message = json[NetMessageKey] {
-                            msg = message as? String ?? "unknown error"
-                        }
-                        let error = NSError(domain: NetworkDomain, code: code, userInfo: [NSLocalizedDescriptionKey : msg])
-                        safeAsync {
-                            complete?(NetResult.init(error: error))
-                        }
-                    }
-                    Print("url:\(target.baseURL.absoluteString + target.path) \n params:\(target.resultParams) \n response:\(json)\n header:\(String(describing: target.headers))")
-                }catch{
-                    //json 解析失败
+               guard let json = try? moyaResponse.mapJSON() as? [String:Any],
+                     let result = NetModel<ResponseBody>.deserialize(from: json) else {
+                let aError = NetError.throwError(code: -1, message: "json error")
+                safeAsync {
+                    complete?(NetResult(error: aError))
+                }
+                Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n error:\(aError) header: \(target.headers)" )
+                return
+               }
+                if result.code == ErrorCode.success.rawValue {
                     safeAsync {
-                        complete?(NetResult.init(error: error as NSError))
+                        complete?(NetResult(value: result))
                     }
-                    Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n error:\(error)")
+                    //加缓存
+                    if target.isCache {
+                        NetCache.store(request: target, data: moyaResponse.data)
+                    }
+                    Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n  response: \(json) \n header: \(target.headers)")
+                }else{
+                    let error = NetError.throwError(code: result.code, message: result.msg)
+                    safeAsync {
+                        complete?(NetResult(error: error))
+                    }
+                    Print("URL:\(target.baseURL.absoluteString + target.path)\n params:\(target.resultParams) \n error:\(error) header: \(target.headers)")
                 }
                 break
             case let .failure(error):
-                let aError = NSError(domain: NetworkDomain, code: -1, userInfo: [NSLocalizedDescriptionKey : error.localizedDescription])
+                let aError = error.netError
                 safeAsync {
                     complete?(NetResult.init(error: aError))
                 }
