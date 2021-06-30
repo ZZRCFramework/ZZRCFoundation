@@ -21,7 +21,7 @@ struct  NetCache {
             }
             do {
                 if let dict = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String : Any] {
-                    let error = NSError.init(domain: NetworkDomain, code: ErrorCode.cache.rawValue, userInfo: nil)
+                    let error = NetError.throwError(code: ErrorCode.cache.rawValue, message: "")
                     safeAsync {
                         complete?(error,data,dict)
                     }
@@ -31,7 +31,10 @@ struct  NetCache {
     }
     
     fileprivate static func getCacheKey(request: NetTargetType) -> String {
-        return "method:\(request.method.rawValue) url:\(request.baseURL.absoluteString + request.path) Argument:\(request.params)".md5()
+        let sortParams = request.params.sorted { (obj1,obj2) in
+            return obj1.key < obj2.key
+        }
+        return "method:\(request.method.rawValue) url:\(request.baseURL.absoluteString + request.path) Argument:\(sortParams)".md5()
     }
 }
 

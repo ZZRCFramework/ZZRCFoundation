@@ -8,6 +8,7 @@
 
 import Foundation
 @_exported import Moya
+import HandyJSON
 import UIDeviceIdentifier
 
 /// 定义 request的规范 基于moya rxswift
@@ -28,11 +29,6 @@ public protocol NetTargetType: TargetType {
     
     var plugins: [PluginType]? { get }
     
-    /// 网络请求方法
-    ///
-    /// - Parameters:
-    ///
-    func request(complete: ((NetResult<[String:Any], NSError>)->(Void))?)
 }
 
 
@@ -62,7 +58,7 @@ public extension NetTargetType {
     }
     
     var task: Task {
-        return .requestParameters(parameters: resultParams, encoding: URLEncoding.default)
+        return .requestParameters(parameters: resultParams, encoding: URLEncoding.queryString)
     }
     
     var resultParams: [String:Any] {
@@ -80,12 +76,6 @@ public extension NetTargetType {
     
     var plugins: [PluginType]? {
         return nil
-    }
-
-    
-    //MARK: Request
-    func request(complete: ((NetResult<[String : Any], NSError>) -> (Void))?) {
-        Network.dyRequest(target: self, complete)
     }
 }
 
