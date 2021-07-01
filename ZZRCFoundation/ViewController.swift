@@ -27,11 +27,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Print(SandboxFilePath.sandBoxPath())
         Network<Api, [User]>.request(target: .test) { result in
             switch result {
             case .cache(let dict), .success(let dict):
                 Print(dict)
-                dict.
                 break
             case .failure(_):
                 break
@@ -55,6 +55,9 @@ enum Api: NetTargetType {
         return ["id":123,"status":1,"a":1,"y":3]
     }
     
+    var isCache: Bool {
+        return true
+    }
 }
 
 class Person: BaseModel,TableCodable {

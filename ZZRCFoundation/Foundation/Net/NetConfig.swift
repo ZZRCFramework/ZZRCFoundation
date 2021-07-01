@@ -40,7 +40,8 @@ public struct NetError: Error {
 
 extension Error {
     var netError: NetError {
-        return NetError.throwError(code: (self as NSError).code, message: (self as NSError).localizedDescription)
+        let error = self as NSError
+        return NetError.throwError(code: error.code, message: error.localizedDescription)
     }
 }
 
@@ -85,5 +86,5 @@ public let NetCodeKey = "code"
 public let NetMessageKey = "msg"
 
 
-typealias DataRequestCompleteBlock = (_ error: NetError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
+typealias DataRequestCompleteClosure = (_ error: NetError,_ data: Data? ,_ result: [String:Any]?) -> (Void)
 

@@ -35,7 +35,7 @@ struct Network<Type: NetTargetType,ResponseBody> {
             case let .success(moyaResponse):
                guard let json = try? moyaResponse.mapJSON() as? [String:Any],
                      let result = NetModel<ResponseBody>.deserialize(from: json) else {
-                let aError = NetError.throwError(code: -1, message: "json error")
+                let aError = NetError.throwError(code: -1, message: "unknow response data format")
                 safeAsync {
                     complete?(NetResult(error: aError))
                 }

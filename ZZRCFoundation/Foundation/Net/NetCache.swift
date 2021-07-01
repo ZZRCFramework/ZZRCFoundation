@@ -14,19 +14,15 @@ struct  NetCache {
         CacheTool.shared.store(obj: data, key: getCacheKey(request: request))
     }
     
-    public static func getCache(request: NetTargetType, complete: DataRequestCompleteBlock?) {
+    public static func getCache(request: NetTargetType, complete: DataRequestCompleteClosure?) {
         CacheTool.shared.getObject(key: getCacheKey(request: request)) { (data) -> (Void) in
-            guard data != nil else {
+            guard let data = data, let dict = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String : Any] else {
                 return
             }
-            do {
-                if let dict = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String : Any] {
-                    let error = NetError.throwError(code: ErrorCode.cache.rawValue, message: "")
-                    safeAsync {
-                        complete?(error,data,dict)
-                    }
-                }
-            } catch {}
+            let error = NetError.throwError(code: ErrorCode.cache.rawValue, message: "")
+            safeAsync {
+                complete?(error,data,dict)
+            }
         }
     }
     
@@ -39,7 +35,7 @@ struct  NetCache {
 }
 
 let autoDeleteTime = 60 * 60 * 24 * 7; // 1 week
-let defaultMemorySize = 100 * 1024 * 1024; //100M
+let defaultMemorySize = 10 * 1024 * 1024; //100M
 
 enum CacheType {
     case `default`
@@ -47,23 +43,22 @@ enum CacheType {
     case onlyDisk
 }
 
-class CacheTool: NSObject {
-    
+class CacheTool {
     public static let shared = CacheTool()
-    
-    override init() {
-        super.init()
-        let path = self.cachePathDirectory()
-        if !FileManager.default.fileExists(atPath: path) {
+    init() {
+        let path = cachePathDirectory()
+        if !SandboxFilePath.fileExists(at: path) {
             do {
                 try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
             } catch _ {}
         }
-        self.addNotification()
+        addNotification()
     }
     
     lazy var memoryCache: NSCache<AnyObject,AnyObject> = {
         let cache = NSCache<AnyObject, AnyObject>()
+        cache.totalCostLimit = maxMemorySize
+        cache.countLimit = maxMemoryCount
         return cache
     }()
     
@@ -78,7 +73,7 @@ class CacheTool: NSObject {
         }
     }
     
-    var maxDiskCacheSize: Int = 500 * 1024 * 1024 //硬盘最大存储空间
+    var maxDiskCacheSize: Int = 50 * 1024 * 1024 //硬盘最大存储空间
 
     lazy var ioQueue: DispatchQueue = {
         let queue = DispatchQueue.init(label: "cache.ioQueue")
@@ -90,8 +85,14 @@ class CacheTool: NSObject {
     }
     
     fileprivate func addNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidEndterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(clearMemory), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [weak self] notify in
+            guard let self = self else{ return }
+            self.appDidEndterBackground()
+        }
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] notify in
+            guard let self = self else{ return }
+            self.clearMemory()
+        }
     }
 }
 
@@ -104,12 +105,12 @@ extension CacheTool {
     ///   - key: key
     public func store(obj: Data,key: String, cacheType: CacheType = .default) {
         if cacheType == .default || cacheType == .onlyMemory {
-            self.memoryCache.setObject(obj as AnyObject, forKey: key as AnyObject, cost: obj.count)
+            memoryCache.setObject(obj as AnyObject, forKey: key as AnyObject, cost: obj.count)
         }
         
         if cacheType == .default || cacheType == .onlyDisk {
             // 缓存到硬盘
-            self.ioQueue.async {
+            ioQueue.async {
                 let path = self.getCachePath(key: key)
                 FileManager.default.createFile(atPath: path, contents: obj, attributes: nil)
             }
@@ -117,24 +118,21 @@ extension CacheTool {
     }
     
     public func getObject(key: String, complete: ((_ data: Data?)->(Void))?) {
-        guard complete != nil else {
-            return
-        }
         if let data = self.memoryCache.object(forKey: key as AnyObject) {
             safeAsync {
-                complete!(data as? Data)
+                complete?(data as? Data)
             }
         }else{
-            self.ioQueue.async {
+            ioQueue.async {
                 let path = self.getCachePath(key: key)
-                if FileManager.default.fileExists(atPath: path) {
-                    let data = NSData.init(contentsOfFile: path)
+                if SandboxFilePath.fileExists(at: path) {
+                    let data = try? Data(contentsOf: URL(fileURLWithPath: path))
                     safeAsync {
-                        complete!(data as Data?)
+                        complete?(data)
                     }
                 }else{
                     safeAsync {
-                        complete!(nil)
+                        complete?(nil)
                     }
                 }
             }
@@ -142,24 +140,24 @@ extension CacheTool {
     }
     
     public func remove(key: String) {
-        self.memoryCache.removeObject(forKey: key as AnyObject)
-        self.ioQueue.async {
+        memoryCache.removeObject(forKey: key as AnyObject)
+        ioQueue.async {
             let path = self.getCachePath(key: key)
             SandboxFilePath.removeFile(at: path)
         }
     }
     
-    @objc public func clearMemory(){
-        self.memoryCache.removeAllObjects()
+    public func clearMemory(){
+        memoryCache.removeAllObjects()
     }
     
     public func clearDisk() {
-        self.ioQueue.async {
+        ioQueue.async {
             SandboxFilePath.removeFile(at: self.cachePathDirectory())
         }
     }
     
-    @objc public func appDidEndterBackground() {
+    public func appDidEndterBackground() {
         checkIsNeedToClearDisk {}
     }
     
@@ -167,44 +165,44 @@ extension CacheTool {
         self.ioQueue.async {
             let cacheURL = self.cachePathDirectory()
             let resourceKeys = [URLResourceKey.isDirectoryKey,URLResourceKey.contentModificationDateKey,URLResourceKey.totalFileAllocatedSizeKey]
-            if let fileEnumerator = FileManager.default.enumerator(at: URL.init(fileURLWithPath: cacheURL), includingPropertiesForKeys: resourceKeys){
-                let expireDate = Date.init(timeIntervalSinceNow: TimeInterval(-autoDeleteTime))
+            if let fileEnumerator = FileManager.default.enumerator(at: URL(fileURLWithPath: cacheURL), includingPropertiesForKeys: resourceKeys){
+                let expireDate = Date(timeIntervalSinceNow: TimeInterval(-autoDeleteTime))
                 let cacheFiles = NSMutableDictionary()
                 var cacheCurrentSize = 0
                 var urlsToDel = [URL]()
                 for url in fileEnumerator {
-                    let url = url as! URL
-                    do{
-                        let att = try url.resourceValues(forKeys: Set.init(resourceKeys))
-                        if att.isDirectory ?? false {
-                            continue
-                        }
-                        let fileDate = (att.contentModificationDate ?? Date()) as NSDate
-                        let compareDate = fileDate.laterDate(expireDate) as NSDate
-                        if compareDate.isEqual(to: expireDate) {
-                            urlsToDel.append(url)
-                            continue
-                        }
-                     let fileSize = att.totalFileAllocatedSize ?? 0
-                        cacheCurrentSize += fileSize
-                        cacheFiles.setObject(att, forKey: url.path as NSString)
-                    } catch _{}
+                    guard let url = url as? URL, let att = try? url.resourceValues(forKeys: Set(resourceKeys)) else {return}
+                    if att.isDirectory ?? false{
+                        continue
+                    }
+                    let fileDate = (att.contentModificationDate ?? Date()) as NSDate
+                    let compareDate = fileDate.laterDate(expireDate) as NSDate
+                    if compareDate.isEqual(to: expireDate) {
+                        urlsToDel.append(url)
+                        continue
+                    }
+                    let fileSize = att.totalFileAllocatedSize ?? 0
+                    cacheCurrentSize += fileSize
+                    cacheFiles.setObject(att, forKey: (url.path as NSString))
                 }
-                
                 for url in urlsToDel {
                     SandboxFilePath.removeFile(at: url.path)
                 }
                 if self.maxDiskCacheSize > 0 && cacheCurrentSize > self.maxDiskCacheSize {
                    let desiredCacheSize = self.maxDiskCacheSize / 2
-                 
                     let sortFiles: [String] = cacheFiles.keysSortedByValue(options: NSSortOptions.concurrent, usingComparator: { (obj1, obj2) -> ComparisonResult in
-                        let obj1 = obj1 as! URLResourceValues
-                        let obj2 = obj2 as! URLResourceValues
-                        return obj1.contentModificationDate!.compare(obj2.contentModificationDate!)
-                    }) as! [String]
+                        if let obj1 = obj1 as? URLResourceValues,
+                           let obj2 = obj2 as? URLResourceValues,
+                           let date1 = obj1.contentModificationDate,
+                           let date2 = obj2.contentModificationDate,
+                           let result = ComparisonResult(rawValue: date1.compare(date2).rawValue){
+                            return result
+                        }
+                        return .orderedDescending
+                    }) as? [String] ?? [String]()
                     for url in sortFiles {
-                        let att = cacheFiles[url] as! URLResourceValues
-                        let size = att.totalFileAllocatedSize ?? 0
+                        let att = cacheFiles[url] as? URLResourceValues
+                        let size = att?.totalFileAllocatedSize ?? 0
                         SandboxFilePath.removeFile(at: url)
                         cacheCurrentSize -= size
                         if cacheCurrentSize < desiredCacheSize {
@@ -212,19 +210,16 @@ extension CacheTool {
                         }
                     }
                 }
-                
-                if complete != nil {
-                    safeAsync({
-                        complete!()
-                    })
-                }
             }
+            safeAsync({
+                complete?()
+            })
         }
     }
     
     //获取Cache 缓存大小
     public func getLocalCacheSize() -> Int64 {
-        return self.getPathSize(self.cachePathDirectory())
+        return getPathSize(cachePathDirectory())
     }
     
 
