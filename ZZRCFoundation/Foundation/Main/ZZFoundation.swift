@@ -48,14 +48,27 @@ public struct ZZFoundation {
     public static let keyWindow = UIApplication.shared.delegate?.window as? UIWindow
     
     //设备 根据宽高判断
-    public static let ISIPHONEX = WINDOW_HEIGHT - 812.0 == 0 // X  XS
+    public static let ISIPHONEX = WINDOW_HEIGHT - 812.0 == 0 // X  XS 12 mini
     public static let ISIPHONEXR = WINDOW_HEIGHT - 896.0 == 0 //XR XSMAX
     
-    public static let ISIPHONESE = WINDOW_HEIGHT - 568.0 == 0
-    public static let ISIPHONE = WINDOW_HEIGHT - 667.0 == 0
-    public static let ISIPHONEPlus = WINDOW_HEIGHT - 736.0 == 0
-    public static let ISHairScreen = ISIPHONEX || ISIPHONEXR
+    public static let ISIPHONESE = WINDOW_HEIGHT - 568.0 == 0 //一代 SE 5 5s
+    public static let ISIPHONE = WINDOW_HEIGHT - 667.0 == 0 // iPhone 6 6s 7 8 二代 SE
+    public static let ISIPHONEPlus = WINDOW_HEIGHT - 736.0 == 0 // iPhone 6 6s 7 8 plus
+    public static let ISIPHONE12 = WINDOW_HEIGHT - 844.0 == 0 // 12 12Pro
+    public static let ISIPHONE12Max = WINDOW_HEIGHT - 926.0 == 0 //12ProMAX
     
+//    public static let ISHairScreen = ISIPHONEX || ISIPHONEXR || ISIPHONE12 || ISIPHONE12Max
+    public static var ISHairScreen: Bool {
+        return safeAreaInsets.bottom > 0
+    }
+    //安全区域的偏移
+    public static var safeAreaInsets: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return keyWindow?.safeAreaInsets ?? .zero
+        } else {
+            return .zero
+        }
+    }
     
     //按当前屏幕宽高比适配后的宽度和高度 以 6 7 8 为基准
     public static func SCALE_WIDTH(_ width:CGFloat) -> CGFloat {
@@ -77,31 +90,16 @@ public struct ZZFoundation {
     //如果设计稿是以 6 7 8尺寸出的  适配iPhone 刘海 的 方法
     public static func ajustTopEdgeOnIPhoneX(_ edge :CGFloat) -> CGFloat{
         if ISHairScreen {
-            return edge + 24;
+            return edge + safeAreaInsets.top - 20 //20是状态栏的高度
         }
-        return edge;
+        return edge
     }
     
     public static func ajustBottomEdgeOnIPhoneX(_ edge :CGFloat) -> CGFloat{
         if ISHairScreen {
-            return edge + 34;
+            return edge + safeAreaInsets.bottom
         }
-        return edge;
-    }
-    
-    //如果设计稿是以 x xs 11 pro 尺寸出的  适配非全面屏 的 方法
-    public static func ajustTopEdgeOnNormal(_ edge :CGFloat) -> CGFloat{
-        if !ISHairScreen {
-            return edge - 24;
-        }
-        return edge;
-    }
-    
-    public static func ajustBottomEdgeOnNormal(_ edge :CGFloat) -> CGFloat{
-        if !ISHairScreen {
-            return edge - 34;
-        }
-        return edge;
+        return edge
     }
     
     public static func numShow(_ num: Int) -> String {
@@ -144,6 +142,11 @@ public struct ZZFoundation {
             return String(format: "%.2fKB", value * 1000.0)
         }
     }
+    
+    public static func moneyShow(_ money: Int) -> String {
+        return String(Double(money)/100.0).toAmount()
+    }
+    
     /// 设备的名字 如 iPhone X
     public static var platformString: String {
         return UIDeviceHardware.platformString()
